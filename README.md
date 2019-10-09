@@ -8,7 +8,7 @@ IDEA:
 desired outcome:
 
 	* Be able to execue application locally, and have it injected into a kubernetes cluster so it 
-	received incoming network traffic, and also can send network traffic out to other services in that cluster.
+	receives incoming network traffic, and also can send network traffic out to other services in that cluster.
 	Local development dream :). 
 	
 	* Code and run your code inside your favorite IDE, and have it receive live traffic as if it was running inside
