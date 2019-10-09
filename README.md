@@ -55,7 +55,7 @@ implementation
 on-exit: 
 1. revert service definition to backed up config
 2. shut down injector
-3. kill all forwarding rules
+3. kill all forwarding rules (prob happens automatically when we shut down khook, as it owns those processes)
 
 if crashed: 
 * print command to explain how to do 1+2 of the above
