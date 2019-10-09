@@ -17,7 +17,7 @@ desired outcome:
 
 desired api:
 
-	bash|$	kube-inject	inject.yml
+	bash|$	kube-inject inject.yml
 	
 
 inject.yml:
