@@ -3,6 +3,7 @@
 // std lib dependencies
 const childProc = require('child_process');
 const fs = require("fs");
+const os = require('os');
 
 // external dependencies
 const yaml = require('js-yaml');
@@ -11,11 +12,17 @@ const dateFormat = require('dateformat');
 const findFreePort = require("find-free-port");
 const yargs = require('yargs/yargs');
 
+const homedir = os.homedir();
+const baseDir = homedir + "/.khook";
+if (!fs.existsSync(baseDir)) {
+    fs.mkdirSync(baseDir)
+}
+
 // globals used during cleanup
 const globalState = {
     startTime: new Date(),
-    backupDir: "backed-up-resources",
-    createDir: "created-resources",
+    backupDir: baseDir + "/backed-up-resources",
+    createDir: baseDir + "/created-resources",
     serviceName: null,
     hookPodName: null,
     serviceReplaced: false,
