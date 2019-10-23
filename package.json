@@ -1,6 +1,6 @@
 {
   "name": "khook",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Hooks traffic from a kubernetes service and sends it your computer instead",
   "main": "index.js",
   "scripts": {

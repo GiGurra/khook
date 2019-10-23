@@ -85,23 +85,21 @@ async function main() {
 
     // The kubernetes configuration of our hook service
     const hookServiceConf = JSON.parse(JSON.stringify(originalServiceConf));
-    delete hookServiceConf.metadata.annotations["field.cattle.io/targetWorkloadIds"];
-    delete hookServiceConf.metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"];
-    delete hookServiceConf.metadata.annotations["workload.cattle.io/targetWorkloadIdNoop"];
-    delete hookServiceConf.metadata.annotations["workload.cattle.io/workloadPortBased"];
+    if (hookServiceConf.metadata.annotations) {
+        delete hookServiceConf.metadata.annotations["field.cattle.io/targetWorkloadIds"];
+        delete hookServiceConf.metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"];
+        delete hookServiceConf.metadata.annotations["workload.cattle.io/targetWorkloadIdNoop"];
+        delete hookServiceConf.metadata.annotations["workload.cattle.io/workloadPortBased"];
+    }
     delete hookServiceConf.metadata["creationTimestamp"];
-    delete hookServiceConf.metadata.labels["cattle.io/creator"];
+    if (hookServiceConf.metadata.labels) {
+        delete hookServiceConf.metadata.labels["cattle.io/creator"];
+    }
     delete hookServiceConf.metadata["ownerReferences"];
     delete hookServiceConf.metadata["selfLink"];
     delete hookServiceConf.metadata["uid"];
     delete hookServiceConf.status;
     hookServiceConf.spec.selector = { name: hookPodName };
-
-    // Check that no hook pod already exists
-    const currentPods = yaml.safeLoad(childProc.execSync("kubectl get pods -o yaml").toString());
-    if (currentPods.items.find(p => p.metadata.name === hookPodName)) {
-        throw new Error("[ALREADY EXISTS] Pod with name '" + hookPodName + "' already exists. Shut this down first before trying khook again")
-    }
 
     // Create backup and new definition directories if they don't exist
     const backupDir = globalState.backupDir;
@@ -123,7 +121,7 @@ async function main() {
 
     // Deploy the pod
     console.log("deploying hook pod ...");
-    childProc.execSync("kubectl apply -f " + createDir + "/" + hookPodName + ".yml");
+    childProc.execSync("kubectl create -f " + createDir + "/" + hookPodName + ".yml");
     globalState.hookPodDeployed = true;
     globalState.hookPodName = hookPodName;
 
