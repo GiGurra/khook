@@ -5,14 +5,14 @@ Quick and dirty hack. Don't expect pretty code :).
 
 When deployed:
 * Creates a jump pod in your current namespace with ssh reverse tunneling capability
-* copies over your public ssh key to it (assumed to be `~/.ssh/id_rsa.pub`)
+* Copies over your public ssh key to it (assumed to be `~/.ssh/id_rsa.pub`)
 * Makes a copy of the Service conf (as a yaml file) in `~/.khook/backed-up-resources/<svcname>-timestamp.yml`
 * Replaces the service conf with one having the same port rules, but forwarding to the jump pod
 * Spins up reverse ssh tunnels to facilitate tcp traffic flow from the jump pod to the local machine
 
 When shutting down:
-* re-applies the original service configuration to the current namespace
-* deletes the jump pod
+* Re-applies the original service configuration to the current namespace
+* Deletes the jump pod
 
 *Warning 1: This program is a total duct tape dirty hack :), and one of the first node.js applications I ever wrote (some of the first js code I ever wrote). For something more serious doing mostly the same thing, have a look at https://www.telepresence.io/*
 
